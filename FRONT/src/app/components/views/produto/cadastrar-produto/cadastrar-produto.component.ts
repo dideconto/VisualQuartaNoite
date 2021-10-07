@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Produto } from "src/app/models/produto";
+import { CategoriaService } from "src/app/services/categoria.service";
 import { ProdutoService } from "src/app/services/produto.service";
+import { Categoria } from "./../../../../models/categoria";
 
 @Component({
     selector: "app-cadastrar-produto",
@@ -13,10 +15,21 @@ export class CadastrarProdutoComponent implements OnInit {
     descricao!: string;
     quantidade!: number;
     preco!: number;
+    categorias!: Categoria[];
+    categoriaId!: number;
 
-    constructor(private service: ProdutoService, private router: Router) {}
+    constructor(
+        private produtoService: ProdutoService,
+        private categoriaService: CategoriaService,
+        private router: Router
+    ) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.categoriaService.list().subscribe((categorias) => {
+            this.categorias = categorias;
+            console.table(categorias);
+        });
+    }
 
     cadastrar(): void {
         let produto: Produto = {
@@ -24,8 +37,9 @@ export class CadastrarProdutoComponent implements OnInit {
             descricao: this.descricao,
             quantidade: this.quantidade,
             preco: this.preco,
+            categoriaId: this.categoriaId,
         };
-        this.service.create(produto).subscribe((produto) => {
+        this.produtoService.create(produto).subscribe((produto) => {
             console.log(produto);
             this.router.navigate(["produto/listar"]);
         });
