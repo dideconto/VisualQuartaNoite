@@ -6,5 +6,6 @@ export interface ItemVenda {
     produtoId: number;
     quantidade: number;
     preco: number;
+    carrinhoId?: string;
     criadoEm?: Date;
 }

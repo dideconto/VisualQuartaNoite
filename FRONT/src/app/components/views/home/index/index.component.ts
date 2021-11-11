@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { ProdutoService } from "src/app/services/produto.service";
 import { Produto } from "src/app/models/produto";
+import { ItemVendaService } from "src/app/services/item-venda.service";
 
 @Component({
     selector: "app-index",
@@ -11,17 +12,16 @@ import { Produto } from "src/app/models/produto";
 })
 export class IndexComponent implements OnInit {
     produtos!: Produto[];
-    itens: ItemVenda[] = [];
 
     constructor(
         private produtoService: ProdutoService,
+        private itemService: ItemVendaService,
         private router: Router
     ) {}
 
     ngOnInit(): void {
         this.produtoService.list().subscribe((produtos) => {
             this.produtos = produtos;
-            this.itens = JSON.parse(localStorage.getItem("itens")!) || [];
         });
     }
 
@@ -31,9 +31,11 @@ export class IndexComponent implements OnInit {
             produtoId: produto.id!,
             quantidade: 1,
             preco: produto.preco,
+            carrinhoId: localStorage.getItem("carrinhoId")! || "",
         };
-        this.itens.push(item);
-        localStorage.setItem("itens", JSON.stringify(this.itens));
-        this.router.navigate(["/home/carrinho"]);
+        this.itemService.create(item).subscribe((item) => {
+            localStorage.setItem("carrinhoId", item.carrinhoId!);
+            this.router.navigate(["/home/carrinho"]);
+        });
     }
 }
