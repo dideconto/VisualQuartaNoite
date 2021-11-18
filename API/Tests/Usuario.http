@@ -1,0 +1,30 @@
+### Cadastrar usuário
+POST https://localhost:5001/api/usuario/create
+Content-Type: application/json
+
+{
+    "Email" : "asd1@asd1.com",
+    "Senha" : "123",
+    "Permissao": "user"
+}
+
+### Login
+GET https://localhost:5001/api/usuario/login
+Content-Type: application/json
+
+{
+    "Email" : "asd1@asd1.com",
+    "Senha" : "123"
+}
+
+### Sem autenticação
+GET https://localhost:5001/api/usuario/sem
+
+### Com autenticação
+GET https://localhost:5001/api/usuario/com
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFzZEBhc2QuY29tIiwicm9sZSI6ImFkbSIsIm5iZiI6MTYzNzE5NjQyOCwiZXhwIjoxNjM3MjAzNjI4LCJpYXQiOjE2MzcxOTY0Mjh9.GUqW-8oS97mk4fFSZqbO1JHnnWtNtPAb8638MyyoPeg
+
+
+### Com permissão
+GET https://localhost:5001/api/usuario/permissao
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFzZDFAYXNkMS5jb20iLCJyb2xlIjoidXNlciIsIm5iZiI6MTYzNzE5NjU5OCwiZXhwIjoxNjM3MjAzNzk4LCJpYXQiOjE2MzcxOTY1OTh9.MgsdCtVJvnGsz2nJxZBQm2vURxya8QX75PJ5Nw3fQdI
